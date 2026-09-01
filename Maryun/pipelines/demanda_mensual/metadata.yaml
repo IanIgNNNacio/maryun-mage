@@ -1,0 +1,40 @@
+blocks:
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: de_refresh_demanda_mensual
+  retry_config: null
+  status: updated
+  timeout: null
+  type: data_exporter
+  upstream_blocks: []
+  uuid: de_refresh_demanda_mensual
+cache_block_output_in_memory: false
+callbacks: []
+concurrency_config: {}
+conditionals: []
+created_at: null
+data_integration: null
+description: Refresca demanda mensual neta desde dwh.ventas_mysis (base desde 2024-01-01).
+executor_config: {}
+executor_count: 1
+executor_type: null
+extensions: {}
+name: demanda_mensual
+notification_config: {}
+remote_variables_dir: null
+retry_config: {}
+run_pipeline_in_one_process: false
+settings:
+  triggers: null
+spark_config: {}
+tags: []
+type: python
+uuid: demanda_mensual
+variables_dir: /home/src/mage_data/Maryun
+widgets: []

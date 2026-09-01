@@ -1,0 +1,74 @@
+blocks:
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - tr_costcenters_jp
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: dl_mongodb_JP_costCenters
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_loader
+  upstream_blocks: []
+  uuid: dl_mongodb_jp_costcenters
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - de_costcenters_jp_to_clickhouse
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: tr_costCenters_JP
+  retry_config: null
+  status: executed
+  timeout: null
+  type: transformer
+  upstream_blocks:
+  - dl_mongodb_jp_costcenters
+  uuid: tr_costcenters_jp
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: de_costCenters_JP_to_clickhouse
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - tr_costcenters_jp
+  uuid: de_costcenters_jp_to_clickhouse
+cache_block_output_in_memory: false
+callbacks: []
+concurrency_config: {}
+conditionals: []
+created_at: '2026-03-19 14:32:45.509595+00:00'
+data_integration: null
+description: Detalle centros de costo
+executor_config: {}
+executor_count: 1
+executor_type: null
+extensions: {}
+name: justpim_mongodb_costCenters_to_clickhouse
+notification_config: {}
+remote_variables_dir: null
+retry_config: {}
+run_pipeline_in_one_process: false
+settings:
+  triggers: null
+spark_config: {}
+tags: []
+type: python
+uuid: justpim_mongodb_costcenters_to_clickhouse
+variables_dir: /home/src/mage_data/Maryun
+widgets: []

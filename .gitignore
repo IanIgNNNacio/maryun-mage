@@ -1,0 +1,54 @@
+# ── credenciales ───────────────────────────────────────────────────────────
+# io_config.yaml tiene las claves de ClickHouse, MySis, MongoDB y SMTP.
+# Si entra una sola vez, queda en el historial para siempre.
+Maryun/io_config.yaml
+Maryun/io_config.yaml.bak-*
+*.env
+*.pem
+*.key
+
+# ── historial interno de Mage ──────────────────────────────────────────────
+# 4.080 archivos, 35 MB, y contiene una copia de io_config.yaml. Mage guarda
+# aqui cada version de cada archivo; para eso ya esta git.
+Maryun/.file_versions/
+
+# ── estado de ejecucion ────────────────────────────────────────────────────
+mage_data/
+Maryun/.ssh_tunnel/
+Maryun/.cache/
+Maryun/.variables/
+Maryun/__pycache__/
+**/__pycache__/
+*.pyc
+*.pyo
+
+# ── salidas y temporales ───────────────────────────────────────────────────
+*.log
+*.db
+*.sqlite
+*.sqlite3
+.DS_Store
+
+# ── excluido por llevar un secreto escrito a mano ──────────────────────────
+# test_poweri.py tiene el CLIENT_SECRET de la aplicacion de Power BI en Azure
+# en texto plano. El cargador de verdad -dl_powerbi_alertas_candidatas_ax.py-
+# lo lee de io_config, que es lo correcto. Este archivo es un resto de prueba.
+# ESE SECRETO HAY QUE ROTARLO: estuvo en disco en el VPS comprometido.
+Maryun/data_loaders/test_poweri.py
+
+# ── credenciales escritas a mano en el codigo ──────────────────────────────
+# Estos archivos llevan RUT y clave de banca, o de Power BI, como literales.
+# Ninguno tiene trigger; el ultimo que corrio de verdad fue en abril de 2026.
+# justpim no se migra y Power BI ya no se usa, asi que no vale la pena
+# refactorizarlos: quedan en disco -y en el respaldo externo cifrado- pero
+# fuera de GitHub. Si alguna vez se quieren versionar, primero hay que
+# sacarles las credenciales.
+Maryun/data_loaders/dl_scraping_bci_jp_playwright.py
+Maryun/data_loaders/dl_scraping_santander_jp.py
+Maryun/data_loaders/dl_scraping_santander_jp_playwright.py
+Maryun/data_loaders/dl_scraping_santander_jp_playwright_3.py
+Maryun/data_loaders/dl_scraping_santander_final.py
+Maryun/data_loaders/dl_powerbi_data.py
+Maryun/data_loaders/dl_powerbi_tabla_stock_productos_inmovilizados.py
+Maryun/data_loaders/dl_tabla_stock_productos_sobrestock.py
+Maryun/utils/v4_core/app/dashboard/auth_config.yaml

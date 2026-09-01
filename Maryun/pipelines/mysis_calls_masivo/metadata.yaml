@@ -1,0 +1,43 @@
+blocks:
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: calls_masivo
+  retry_config: null
+  status: updated
+  timeout: null
+  type: custom
+  upstream_blocks: []
+  uuid: calls_masivo
+cache_block_output_in_memory: false
+callbacks: []
+concurrency_config: {}
+conditionals: []
+created_at: '2026-08-19 23:15:00.420012+00:00'
+data_integration: null
+description: 'Corre CALL calculadora_pmp para TODO el universo (sucursal, sku) en
+  MySis. ESCRIBE en mryn_data.pmp_detalle y pmp_resumen, nada mas. Paralelo, reanudable,
+  no aborta ante el error 1365 de division por cero. Modos: estado / muestra / completo.
+  El avance se guarda en dwh.mysis_calls_log.'
+executor_config: {}
+executor_count: 1
+executor_type: null
+extensions: {}
+name: mysis_calls_masivo
+notification_config: {}
+remote_variables_dir: null
+retry_config: {}
+run_pipeline_in_one_process: false
+settings:
+  triggers: null
+spark_config: {}
+tags: []
+type: python
+uuid: mysis_calls_masivo
+variables_dir: /home/src/mage_data/Maryun
+widgets: []

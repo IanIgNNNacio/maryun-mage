@@ -1,0 +1,39 @@
+# Umbrales del Panel Gerencial del dashboard.
+#
+# Solo afectan la VISUALIZACIÓN gerencial. No afectan el pipeline, ni el motor de
+# abastecimiento, ni facturación, clasificación o pronósticos. Si este archivo no
+# existe, el código usa estos mismos valores como defaults. Los sliders del panel
+# parten de aquí y permiten ajustar en vivo.
+#
+# (Los umbrales de "candidato a compra nacional" viven en consolidado_params.yaml
+#  y se reutilizan tal cual.)
+
+# Nº máximo de filas en rankings / heatmap (rendimiento).
+top_n: 50
+
+# Cobertura mínima (0–1) para marcar un producto como "infaltable"
+# (además debe ser de alta rotación). El flag 'critico' del ERP también marca infaltable.
+infaltable_cobertura_min: 0.80
+
+# Índice HHI (0–1) de concentración de la demanda entre sucursales:
+#   HHI >= este valor  -> "Concentrado" (demanda en pocas sucursales)
+#   HHI <  este valor  -> "Distribuido" (demanda transversal)
+hhi_concentrado: 0.50
+
+# Semanas de cobertura por debajo de las cuales se considera riesgo por cobertura.
+semanas_cobertura_critica: 2.0
+
+# |variación| del pronóstico vs promedio histórico mensual para etiquetar
+# "Demanda creciente/decreciente".
+variacion_alta_pct: 0.20
+
+# Días sin venta a partir de los cuales un producto con stock se considera
+# "inmovilizado" (capital dormido).
+inmovilizado_dias: 90
+
+# Stock > factor × demanda del mes (y con venta ≤89 días) => "sobrestock".
+sobrestock_factor: 1.30
+
+# Mínimo de meses cerrados con observación para mostrar el MAPE de un producto
+# (evita MAPE poco confiable con 1 solo mes).
+mape_meses_min: 2

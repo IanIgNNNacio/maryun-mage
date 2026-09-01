@@ -1,0 +1,50 @@
+SELECT
+  o1.pid,
+  o1.padre,
+  ''                    AS shopify,
+  b1.bodega_desc        AS sucursal,
+  TRIM(p1.rso)          AS rso,
+  p1.rut,
+  o1.dt_in              AS creado,
+  o1.dt_picking,
+  NULL                  AS facturar,
+  o1.dt_out             AS facturado,
+  o1.dt_cierre          AS confirmado,
+  o1.entregado,
+  o1.dt_vencimiento     AS vencimiento,
+  o1.guia,
+  o1.factura,
+  ROUND(o1.neto) * -1   AS neto,
+  ROUND(o1.iva)  * -1   AS iva,
+  ROUND(o1.total)* -1   AS total,
+  0                     AS deuda,
+  a1.sku,
+  s1.nombre,
+  s1.descripcion,
+  a1.entrega            AS qty,
+  a1.entrega            AS picking,
+  a1.pu * -1            AS pu,
+  a1.tramo,
+  a1.pmp,
+  (a1.entrega) * a1.pmp * -1 AS totaliza_pmp,
+  (a1.entrega) * a1.pu  * -1 AS totaliza_vta,
+  ((a1.entrega) * a1.pu * -1) - ((a1.entrega) * a1.pmp * -1) AS margen,
+  u1.tcomision,
+  o1.observacion,
+  CONCAT(u1.user_name,' ',u1.user_apellido) AS vendedor,
+  u1.user_rut            AS rut_vendedor,
+  ''                     AS remunera,
+  p1.comuna,
+  p1.direccion,
+  s1.area,
+  s1.procedencia,
+  (SELECT marca_descripcion   FROM tab_marcas   WHERE marca_id = s1.marca_id)   AS marca,
+  (SELECT familia_descripcion FROM tab_familias WHERE familia_id = s1.familia_id) AS familia,
+  (SELECT tipo_descripcion    FROM tab_tipos    WHERE tipo_id   = s1.tipo_id)     AS tipo
+FROM mstr_nc o1
+JOIN mstr_nc_aux a1 ON o1.pid = a1.pid
+JOIN tab_sku s1     ON a1.sku = s1.sku
+JOIN tab_clientes p1 ON o1.cliente_id = p1.cliente_id
+JOIN tab_users u1    ON u1.user_id = o1.usr_in
+JOIN tab_bodegas b1  ON o1.sucursal_id = b1.bodega_id
+WHERE o1.dt_in >= '{{ start_date }}' AND o1.dt_in < '{{ end_date }}';

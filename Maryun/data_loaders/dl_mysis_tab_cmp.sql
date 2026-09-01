@@ -1,0 +1,1 @@
+SELECT * FROM tab_cmp WHERE dt_in >= NOW() - INTERVAL 20 DAY

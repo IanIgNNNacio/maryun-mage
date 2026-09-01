@@ -1,0 +1,71 @@
+blocks:
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - entregar_al_erp
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: cosechar_rcv
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_loader
+  upstream_blocks: []
+  uuid: cosechar_rcv
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: entregar_al_erp
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - cosechar_rcv
+  uuid: entregar_al_erp
+cache_block_output_in_memory: false
+callbacks: []
+concurrency_config: {}
+conditionals: []
+created_at: '2026-08-13 06:02:12.225720+00:00'
+data_integration: null
+description: 'Cosecha el RCV del SII desde el VPS y lo entrega al ERP por POST /api/sii/rcv.
+  Existe porque las peticiones al SII desde Vercel tardan demasiado. Manda el CSV
+  sin interpretar: la lectura de los datos y las reglas de guardado viven en el ERP,
+  en un solo sitio. Destino segun RCV_DESTINO (vercel|vps|ambos).'
+executor_config: {}
+executor_count: 1
+executor_type: null
+extensions: {}
+name: maryun_erp_sii_rcv
+notification_config: {}
+remote_variables_dir: null
+retry_config: {}
+run_pipeline_in_one_process: false
+settings:
+  triggers: null
+spark_config: {}
+tags: []
+type: python
+uuid: maryun_erp_sii_rcv
+variables:
+  ERP_SECRET_PREVIEW:
+  ERP_SECRET_VERCEL:
+  ERP_SECRET_VPS:
+  ERP_URL_PREVIEW: https://preview.maryun.cl
+  ERP_URL_VERCEL: https://erp.maryun.cl
+  ERP_URL_VPS: https://respaldo.maryun.cl
+  RCV_DESTINO: vercel
+  SII_CLAVE:
+  SII_RUT: 77084730-3
+  anio: 2026
+variables_dir: /home/src/mage_data/Maryun
+widgets: []

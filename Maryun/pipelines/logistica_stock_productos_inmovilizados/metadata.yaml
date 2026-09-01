@@ -1,0 +1,112 @@
+blocks:
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - tr_powerbi_tabla_stock_productos_inmovilizados
+  - tr_tabla_stock_productos_sobrestock
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: dl_powerbi_tabla_stock_productos_inmovilizados
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_loader
+  upstream_blocks: []
+  uuid: dl_powerbi_tabla_stock_productos_inmovilizados
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - tr_merge_stock_inmovilizado_sobrestock
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: tr_powerbi_tabla_stock_productos_inmovilizados
+  retry_config: null
+  status: executed
+  timeout: null
+  type: transformer
+  upstream_blocks:
+  - dl_powerbi_tabla_stock_productos_inmovilizados
+  uuid: tr_powerbi_tabla_stock_productos_inmovilizados
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: de_powerbi_tabla_stock_productos_inmovilizados
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - tr_merge_stock_inmovilizado_sobrestock
+  uuid: de_powerbi_tabla_stock_productos_inmovilizados
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    file_source:
+      path: transformers/tr_tabla_stock_productos_sobrestock.py
+  downstream_blocks:
+  - tr_merge_stock_inmovilizado_sobrestock
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: tr_tabla_stock_productos_sobrestock
+  retry_config: null
+  status: executed
+  timeout: null
+  type: transformer
+  upstream_blocks:
+  - dl_powerbi_tabla_stock_productos_inmovilizados
+  uuid: tr_tabla_stock_productos_sobrestock
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - de_powerbi_tabla_stock_productos_inmovilizados
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: tr_merge_stock_inmovilizado_sobrestock
+  retry_config: null
+  status: executed
+  timeout: null
+  type: transformer
+  upstream_blocks:
+  - tr_tabla_stock_productos_sobrestock
+  - tr_powerbi_tabla_stock_productos_inmovilizados
+  uuid: tr_merge_stock_inmovilizado_sobrestock
+cache_block_output_in_memory: false
+callbacks: []
+concurrency_config: {}
+conditionals: []
+created_at: '2026-03-25 11:25:14.954984+00:00'
+data_integration: null
+description: null
+executor_config: {}
+executor_count: 1
+executor_type: null
+extensions: {}
+name: logistica_stock_productos_inmovilizados
+notification_config: {}
+remote_variables_dir: null
+retry_config: {}
+run_pipeline_in_one_process: false
+settings:
+  triggers: null
+spark_config: {}
+tags: []
+type: python
+uuid: logistica_stock_productos_inmovilizados
+variables_dir: /home/src/mage_data/Maryun
+widgets: []

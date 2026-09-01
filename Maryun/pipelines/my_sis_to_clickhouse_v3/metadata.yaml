@@ -1,0 +1,48 @@
+blocks:
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: dl_ventas_mysis_batch_v3
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_loader
+  upstream_blocks: []
+  uuid: dl_ventas_mysis_batch_v3
+cache_block_output_in_memory: false
+callbacks: []
+concurrency_config: {}
+conditionals: []
+created_at: null
+data_integration: null
+description: V3 - reporte_ventas_completo -> dwh.ventas_mysis_2 (mes a mes, upsert,
+  paridad con base)
+executor_config: {}
+executor_count: 1
+executor_type: null
+extensions: {}
+name: my_sis_to_clickhouse_v3
+notification_config: {}
+remote_variables_dir: null
+retry_config: {}
+run_pipeline_in_one_process: false
+settings:
+  triggers: null
+spark_config: {}
+tags:
+- MYSIS
+- SUPERSET
+- V3
+type: python
+uuid: my_sis_to_clickhouse_v3
+variables:
+  end_date: '2026-06-30'
+  meses_por_lote: 1
+  start_date: '2026-04-01'
+variables_dir: /home/src/mage_data/Maryun
+widgets: []

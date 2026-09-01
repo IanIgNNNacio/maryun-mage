@@ -1,0 +1,63 @@
+# Source mapping — MariaDB table/view names per logical entity.
+# The pipeline references logical keys (products, stock, sales, …); this file
+# maps each to the actual SQL object. Changing a source is a YAML edit, not
+# a code change.
+
+schema: maryun_erp
+
+tables:
+  products:        BASE_PRODUCTOS
+  stock:           BASE_STOCK
+  sales:           BASE_VENTAS
+  purchases:       BASE_COMPRAS
+  transfers:       BASE_TRANSFERENCIAS
+  locations:       BASE_UBICACIONES
+  suppliers:       BASE_PROVEEDORES
+  lead_times:      BASE_LEAD_TIMES
+
+# Columns that SQL queries rely on. Keep aligned with the actual DDL.
+columns:
+  products:
+    sku_id:         SKU_ID
+    sku:            SKU
+    nombre:         NOMBRE
+    familia:        FAMILIA_DESCRIPCION
+    marca:          MARCA_DESCRIPCION
+    tipo:           TIPO_DESCRIPCION
+    costo:          COSTO
+    procedencia:    PROCEDENCIA          # "nacional" | "importado"
+    critico:        CRITICO
+    minimo:         MINIMO
+    sale_ok:        SALE_OK
+    purchase_ok:    PURCHASE_OK
+  stock:
+    sku_id:         SKU_ID
+    sku:            SKU
+    lote:           LOTE
+    posicion:       POSICION
+    qty:            QTY
+    nombre:         NOMBRE
+  sales:
+    sku_id:         SKU_ID
+    fecha:          FECHA
+    sucursal:       SUCURSAL
+    cantidad:       CANTIDAD
+    monto_neto:     MONTO_NETO
+
+# Sucursales canónicas (orden para reportes).
+sucursales:
+  - CASTRO
+  - CONCEPCION
+  - OSORNO
+  - PUERTO MONTT
+  - PUERTO VARAS
+  - QUELLON
+  - VALDIVIA
+  - LOS ANGELES EXPRESS
+  - MARKETPLACE
+  - SANTIAGO
+  - CARDONAL
+
+centros_distribucion:
+  - CD SANTIAGO
+  - CD SUR

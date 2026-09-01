@@ -1,0 +1,71 @@
+blocks:
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - entregar_al_erp
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: cosechar_cartola
+  retry_config: null
+  status: updated
+  timeout: null
+  type: data_loader
+  upstream_blocks: []
+  uuid: cosechar_cartola
+- all_upstream_blocks_executed: false
+  color: null
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: entregar_al_erp
+  retry_config: null
+  status: updated
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - cosechar_cartola
+  uuid: entregar_al_erp
+cache_block_output_in_memory: false
+callbacks: []
+concurrency_config: {}
+conditionals: []
+created_at: '2026-08-17 19:24:29.069355+00:00'
+data_integration: null
+description: Extrae la cartola de la cuenta corriente empresa de Santander Office
+  Banking hacia un DataFrame. Corre en el VPS con nodriver bajo Xvfb (el portal bloquea
+  headless) e intercepta por CDP el JSON de ObtenerMovimientos que pide el propio
+  portal, sin reconstruir tokens ni firmas. Solo lectura. Reemplaza a scraping_santander-antesservia.py.
+executor_config: {}
+executor_count: 1
+executor_type: null
+extensions: {}
+name: maryun_santander_cartola
+notification_config: {}
+remote_variables_dir: null
+retry_config: {}
+run_pipeline_in_one_process: false
+settings:
+  triggers: null
+spark_config: {}
+tags: []
+type: python
+uuid: maryun_santander_cartola
+variables:
+  CARTOLA_DESTINO: preview
+  ERP_SECRET_PREVIEW:
+  ERP_SECRET_VERCEL:
+  ERP_SECRET_VPS:
+  ERP_URL_PREVIEW: https://preview.maryun.cl
+  ERP_URL_VERCEL: https://erp.maryun.cl
+  ERP_URL_VPS: https://respaldo.maryun.cl
+  SANTANDER_CLAVE:
+  desde: '2026-08-14'
+  hasta: '2026-08-17'
+variables_dir: /home/src/mage_data/Maryun
+widgets: []

@@ -1,0 +1,34 @@
+# Umbrales y pesos de la sección "Compra consolidada nacional" del dashboard.
+#
+# Esta configuración es SOLO para la vista nueva de compra consolidada. No
+# afecta el pipeline, ni la facturación, ni la clasificación, ni los pronósticos.
+# Si este archivo no existe, el código usa los mismos valores como defaults.
+#
+# Los controles del dashboard (sliders) parten de estos valores y permiten
+# ajustarlos en vivo sin editar el archivo.
+
+# Fracción mínima de sucursales (0–1) con demanda pronosticada para que un
+# producto sea candidato por cobertura. 0.50 = presente con demanda en la
+# mitad o más de las sucursales.
+cobertura_min_pct: 0.50
+
+# Nº mínimo de sucursales donde el producto está clasificado como alta
+# rotación (XYZ = 'X') para ser candidato por rotación.
+rotacion_suc_min: 3
+
+# Pesos del score de prioridad (idealmente suman 1; si no, se normalizan).
+peso_cobertura: 0.50   # cuánto pesa estar en muchas sucursales
+peso_demanda: 0.30     # cuánto pesa el volumen de demanda consolidada
+peso_rotacion: 0.20    # cuánto pesa la alta rotación
+
+# Cortes de score (0–100) para la etiqueta de prioridad.
+corte_prioridad_alta: 66.0    # score >= 66 -> "Alta"
+corte_prioridad_media: 33.0   # score >= 33 -> "Media"; si no, "Baja"
+
+# Ubicaciones que NO se cuentan como sucursales (centros de distribución).
+cd_labels:
+  - "CD SANTIAGO"
+  - "CD SUR"
+
+# Máximo de filas a mostrar en la tabla (rendimiento).
+top_n: 200

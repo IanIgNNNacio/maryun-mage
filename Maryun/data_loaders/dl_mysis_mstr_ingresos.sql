@@ -1,0 +1,1 @@
+SELECT * FROM mstr_ingresos WHERE dt_in >= NOW() - INTERVAL 20 DAY

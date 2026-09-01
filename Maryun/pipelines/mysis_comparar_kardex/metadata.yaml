@@ -1,0 +1,43 @@
+blocks:
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: comparar_kardex
+  retry_config: null
+  status: updated
+  timeout: null
+  type: custom
+  upstream_blocks: []
+  uuid: comparar_kardex
+cache_block_output_in_memory: false
+callbacks: []
+concurrency_config: {}
+conditionals: []
+created_at: '2026-08-20 00:39:40.103615+00:00'
+data_integration: null
+description: Compara mryn_data.pmp_detalle contra dwh.mysis_pmp_detalle par por par
+  con checksum CRC32 fila a fila. Calcula los checksums en MariaDB (viajan 70k filas,
+  no 2,6M), los guarda en dwh.mysis_pmp_checksums y hace la comparacion final en ClickHouse.
+  Solo lectura sobre MySis.
+executor_config: {}
+executor_count: 1
+executor_type: null
+extensions: {}
+name: mysis_comparar_kardex
+notification_config: {}
+remote_variables_dir: null
+retry_config: {}
+run_pipeline_in_one_process: false
+settings:
+  triggers: null
+spark_config: {}
+tags: []
+type: python
+uuid: mysis_comparar_kardex
+variables_dir: /home/src/mage_data/Maryun
+widgets: []

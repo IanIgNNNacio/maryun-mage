@@ -1,0 +1,43 @@
+blocks:
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: kardex_pmp_sql
+  retry_config: null
+  status: updated
+  timeout: null
+  type: custom
+  upstream_blocks: []
+  uuid: kardex_pmp_sql
+cache_block_output_in_memory: false
+callbacks: []
+concurrency_config: {}
+conditionals: []
+created_at: '2026-08-14 04:12:30.347377+00:00'
+data_integration: null
+description: Kardex valorizado PMP replicado en ClickHouse (reemplaza al stored procedure
+  calculadora_pmp de MySis). Lee los espejos dwh.mysis_* con FINAL, recorre los movimientos
+  por SKU en orden cronologico global (todas las sucursales juntas) y escribe dwh.mysis_pmp_detalle.
+  No toca MySis.
+executor_config: {}
+executor_count: 1
+executor_type: null
+extensions: {}
+name: mysis_pmp_kardex_to_clickhouse
+notification_config: {}
+remote_variables_dir: null
+retry_config: {}
+run_pipeline_in_one_process: false
+settings:
+  triggers: null
+spark_config: {}
+tags: []
+type: python
+uuid: mysis_pmp_kardex_to_clickhouse
+variables_dir: /home/src/mage_data/Maryun
+widgets: []

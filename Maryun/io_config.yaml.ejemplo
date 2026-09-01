@@ -1,0 +1,183 @@
+# Plantilla de io_config.yaml. El archivo real NO se versiona: tiene las
+# credenciales de ClickHouse, MySis, MongoDB, Power BI y SMTP.
+#
+# Vive solo en el servidor, en /srv/stacks/mage/project/Maryun/.
+# Para levantar Mage en otra maquina: copiar este archivo a io_config.yaml
+# y rellenar los <completar>.
+
+version: <completar>
+maryun:
+  # MONGODB_URI: mongodb://<completar>
+  # MONGODB_URI: mongodb://<completar>
+  MONGODB_URI: <completar>
+  MONGODB_DB: MPoS
+  # Clickhouse
+  CLICKHOUSE_DATABASE: dwh
+  CLICKHOUSE_LOG_DATABASE: logistica_v2
+  CLICKHOUSE_HOST: clickhouse
+  CLICKHOUSE_INTERFACE: http
+  CLICKHOUSE_PASSWORD: <completar>
+  CLICKHOUSE_PORT: 8123
+  CLICKHOUSE_USERNAME: <completar>
+  # MySQL
+  MYSQL_DATABASE: mryn_data
+  MYSQL_HOST: mysis_tunnel
+  MYSQL_PASSWORD: <completar>
+  MYSQL_PORT: 3306
+  MYSQL_USER: <completar>
+  # PostgresSQL
+  POSTGRES_CONNECT_TIMEOUT: <completar>
+  POSTGRES_DBNAME: <completar>
+  POSTGRES_SCHEMA: <completar>
+  POSTGRES_USER: <completar>
+  POSTGRES_PASSWORD: <completar>
+  POSTGRES_HOST: <completar>
+  POSTGRES_PORT: 5432
+  # PowerBi
+  POWERBI_TENANT_ID: <completar>
+  POWERBI_CLIENT_ID: <completar>
+  POWERBI_CLIENT_SECRET: <completar>
+  POWERBI_GROUP_ID: <completar>
+  #Teams/Outlook
+  TEAMS_WEBHOOK_URL: <completar>
+  SMTP_HOST: <completar>
+  SMTP_PORT: 587
+  SMTP_USERNAME: <completar>
+  SMTP_PASSWORD: <completar>
+  SMTP_FROM: <completar>
+  SMTP_TO: <completar>
+default:
+  # Default profile created for data IO access.
+  # Add your credentials for the source you use, and delete the rest.
+  # AWS
+  AWS_ACCESS_KEY_ID: <completar>
+  AWS_SECRET_ACCESS_KEY: <completar>
+  AWS_SESSION_TOKEN: <completar>
+  AWS_REGION: <completar>
+  # Algolia
+  ALGOLIA_APP_ID: <completar>
+  ALGOLIA_API_KEY: <completar>
+  ALGOLIA_INDEX_NAME: <completar>
+  # Airtable
+  AIRTABLE_ACCESS_TOKEN: <completar>
+  # Azure
+  AZURE_CLIENT_ID: <completar>
+  AZURE_CLIENT_SECRET: <completar>
+  AZURE_STORAGE_ACCOUNT_NAME: <completar>
+  AZURE_TENANT_ID: <completar>
+  # Chroma
+  CHROMA_COLLECTION: <completar>
+  CHROMA_PATH: <completar>
+  # Clickhouse
+  CLICKHOUSE_DATABASE: dwh
+  CLICKHOUSE_HOST: <completar>
+  CLICKHOUSE_INTERFACE: http
+  CLICKHOUSE_PASSWORD: <completar>
+  CLICKHOUSE_PORT: 8123
+  CLICKHOUSE_USERNAME: <completar>
+  # Druid
+  DRUID_HOST: <completar>
+  DRUID_PASSWORD: <completar>
+  DRUID_PATH: <completar>
+  DRUID_PORT: <completar>
+  DRUID_SCHEME: http
+  DRUID_USER: <completar>
+  # DuckDB
+  DUCKDB_DATABASE: <completar>
+  DUCKDB_SCHEMA: <completar>
+  # Google
+  GOOGLE_SERVICE_ACC_KEY:
+    type: <completar>
+    project_id: <completar>
+    private_key_id: <completar>
+    private_key: <completar>
+    client_email: <completar>
+    auth_uri: <completar>
+    token_uri: <completar>
+    auth_provider_x509_cert_url: <completar>
+    client_x509_cert_url: <completar>
+  GOOGLE_SERVICE_ACC_KEY_FILEPATH: <completar>
+  GOOGLE_LOCATION: <completar>
+  # MongoDB
+  # Specify either the connection string or the (host, password, user, port) to connect to MongoDB.
+  MONGODB_CONNECTION_STRING: <completar>
+  MONGODB_HOST: <completar>
+  MONGODB_PORT: <completar>
+  MONGODB_USER: <completar>
+  MONGODB_PASSWORD: <completar>
+  MONGODB_DATABASE: <completar>
+  MONGODB_COLLECTION: <completar>
+  # MSSQL
+  MSSQL_DATABASE: <completar>
+  MSSQL_SCHEMA: <completar>
+  MSSQL_DRIVER: <completar>
+  MSSQL_HOST: <completar>
+  MSSQL_PASSWORD: <completar>
+  MSSQL_PORT: <completar>
+  MSSQL_USER: <completar>
+  # MySQL
+  MYSQL_DATABASE: <completar>
+  MYSQL_HOST: <completar>
+  MYSQL_PASSWORD: <completar>
+  MYSQL_PORT: 3306
+  MYSQL_USER: <completar>
+  # Pinot
+  PINOT_HOST: <completar>
+  PINOT_PASSWORD: <completar>
+  PINOT_PATH: <completar>
+  PINOT_PORT: <completar>
+  PINOT_SCHEME: http
+  PINOT_USER: <completar>
+  # PostgresSQL
+  POSTGRES_CONNECT_TIMEOUT: <completar>
+  POSTGRES_DBNAME: <completar>
+  POSTGRES_SCHEMA: <completar>
+  POSTGRES_USER: <completar>
+  POSTGRES_PASSWORD: <completar>
+  POSTGRES_HOST: <completar>
+  POSTGRES_PORT: 5432
+  # Qdrant
+  QDRANT_COLLECTION: <completar>
+  QDRANT_PATH: <completar>
+  # Redshift
+  REDSHIFT_SCHEMA: <completar>
+  REDSHIFT_DBNAME: <completar>
+  REDSHIFT_HOST: <completar>
+  REDSHIFT_PORT: <completar>
+  REDSHIFT_TEMP_CRED_USER: <completar>
+  REDSHIFT_TEMP_CRED_PASSWORD: <completar>
+  REDSHIFT_DBUSER: <completar>
+  REDSHIFT_CLUSTER_ID: <completar>
+  REDSHIFT_IAM_PROFILE: default
+  # Snowflake
+  SNOWFLAKE_USER: <completar>
+  SNOWFLAKE_PASSWORD: <completar>
+  SNOWFLAKE_ACCOUNT: <completar>
+  SNOWFLAKE_DEFAULT_WH: <completar>
+  SNOWFLAKE_DEFAULT_DB: <completar>
+  SNOWFLAKE_DEFAULT_SCHEMA: <completar>
+  SNOWFLAKE_PRIVATE_KEY_PASSPHRASE: <completar>
+  SNOWFLAKE_PRIVATE_KEY_PATH: <completar>
+  SNOWFLAKE_ROLE: <completar>
+  SNOWFLAKE_TIMEOUT: <completar>
+  # Trino
+  trino:
+    catalog: <completar>
+    host: <completar>
+    http_headers:
+      X-Something: <completar>
+    http_scheme: http
+    password: <completar>
+    port: <completar>
+    schema: <completar>
+    session_properties:                       <completar>
+      acc01.optimize_locality_enabled: false
+      optimize_hash_generation: true
+    source: <completar>
+    user: <completar>
+    verify: <completar>
+  # Weaviate
+  WEAVIATE_ENDPOINT: <completar>
+  WEAVIATE_INSTANCE_API_KEY: <completar>
+  WEAVIATE_INFERENCE_API_KEY: <completar>
+  WEAVIATE_COLLECTION: <completar>

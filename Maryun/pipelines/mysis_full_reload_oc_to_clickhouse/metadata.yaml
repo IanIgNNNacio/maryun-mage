@@ -1,0 +1,44 @@
+blocks:
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: full_reload_oc
+  retry_config: null
+  status: updated
+  timeout: null
+  type: custom
+  upstream_blocks: []
+  uuid: full_reload_oc
+cache_block_output_in_memory: false
+callbacks: []
+concurrency_config: {}
+conditionals: []
+created_at: '2026-08-21 04:26:56.976475+00:00'
+data_integration: null
+description: 'Recarga completa y atomica de mstr_oc y mstr_oc_aux desde MySis a ClickHouse
+  (staging + EXCHANGE TABLES). Existe porque el incremental por dt_in nunca ve el
+  UPDATE posterior de oc_fin/dt_cierre: el espejo cree abiertas 2.463 OC cuando MySis
+  tiene 1.587, y mstr_oc_aux tiene 9.678 lineas que ya no existen en el origen. Mismo
+  defecto que tenia tab_cmp. Solo lectura sobre MySis.'
+executor_config: {}
+executor_count: 1
+executor_type: null
+extensions: {}
+name: mysis_full_reload_oc_to_clickhouse
+notification_config: {}
+remote_variables_dir: null
+retry_config: {}
+run_pipeline_in_one_process: false
+settings:
+  triggers: null
+spark_config: {}
+tags: []
+type: python
+uuid: mysis_full_reload_oc_to_clickhouse
+variables_dir: /home/src/mage_data/Maryun
+widgets: []

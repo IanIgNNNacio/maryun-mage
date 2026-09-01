@@ -1,0 +1,345 @@
+blocks:
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - tr_filtro_alertas_nuevas
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: dl_mysis_alertas_silencio
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_loader
+  upstream_blocks:
+  - de_notificacion_inicio
+  uuid: dl_mysis_alertas_silencio
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    file_path: data_loaders/dl_powerbi_data.py
+    file_source:
+      path: data_loaders/dl_powerbi_data.py
+  downstream_blocks:
+  - tr_clean_alertas
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: dl_powerbi_data
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_loader
+  upstream_blocks: []
+  uuid: dl_powerbi_data
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    data_provider: mysql
+    data_provider_profile: maryun
+    dbt: {}
+    disable_query_preprocessing: false
+    export_write_policy: append
+    limit: 1000
+    use_raw_sql: true
+  downstream_blocks:
+  - tr_clean_stock_data
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: sql
+  name: dl_stock_mysis
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_loader
+  upstream_blocks: []
+  uuid: dl_stock_mysis
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    data_provider: mysql
+    data_provider_profile: maryun
+    export_write_policy: append
+  downstream_blocks:
+  - tr_fix_ordenes_stock
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: tr_clean_stock_data
+  retry_config: null
+  status: executed
+  timeout: null
+  type: transformer
+  upstream_blocks:
+  - dl_stock_mysis
+  uuid: tr_clean_stock_data
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - tr_fix_ordenes_stock
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: tr_clean_alertas
+  retry_config: null
+  status: executed
+  timeout: null
+  type: transformer
+  upstream_blocks:
+  - dl_powerbi_data
+  uuid: tr_clean_alertas
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - tr_filtro_alertas_nuevas
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: tr_fix_ordenes_stock
+  retry_config: null
+  status: executed
+  timeout: null
+  type: transformer
+  upstream_blocks:
+  - tr_clean_stock_data
+  - tr_clean_alertas
+  uuid: tr_fix_ordenes_stock
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - de_alertas_clickhouse
+  - tr_merge_api_traspasos
+  - tr_merge_api_oc
+  - de_notificacion_termino
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: tr_filtro_alertas_nuevas
+  retry_config: null
+  status: executed
+  timeout: null
+  type: transformer
+  upstream_blocks:
+  - dl_mysis_alertas_silencio
+  - tr_fix_ordenes_stock
+  uuid: tr_filtro_alertas_nuevas
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    data_provider: clickhouse
+    data_provider_profile: maryun
+    dbt: {}
+    disable_query_preprocessing: false
+    export_write_policy: append
+    file_path: data_loaders/dl_productos_by_proveedor.sql
+    file_source:
+      path: data_loaders/dl_productos_by_proveedor.sql
+    limit: 1000
+    use_raw_sql: true
+  downstream_blocks:
+  - tr_merge_api_oc
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: sql
+  name: dl_productos_by_proveedor
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_loader
+  upstream_blocks: []
+  uuid: dl_productos_by_proveedor
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - de_post_api_oc
+  - de_api_oc_detalles_clickhouse
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: tr_merge_api_oc
+  retry_config: null
+  status: executed
+  timeout: null
+  type: transformer
+  upstream_blocks:
+  - tr_filtro_alertas_nuevas
+  - dl_productos_by_proveedor
+  uuid: tr_merge_api_oc
+- all_upstream_blocks_executed: false
+  color: null
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: de_api_oc_detalles_clickhouse
+  retry_config: null
+  status: updated
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - tr_merge_api_oc
+  - de_post_api_oc
+  uuid: de_api_oc_detalles_clickhouse
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - de_api_oc_detalles_clickhouse
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: de_post_api_oc
+  retry_config: null
+  status: updated
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - tr_merge_api_oc
+  uuid: de_post_api_oc
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    file_path: transformers/tr_merge_api_traspasos.py
+    file_source:
+      path: transformers/tr_merge_api_traspasos.py
+  downstream_blocks:
+  - de_post_traspasos_mysis
+  - de_trapasos_detalle_clickhouse
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: tr_merge_api_traspasos
+  retry_config: null
+  status: executed
+  timeout: null
+  type: transformer
+  upstream_blocks:
+  - tr_filtro_alertas_nuevas
+  uuid: tr_merge_api_traspasos
+- all_upstream_blocks_executed: false
+  color: null
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: de_trapasos_detalle_clickhouse
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - tr_merge_api_traspasos
+  - de_post_traspasos_mysis
+  uuid: de_trapasos_detalle_clickhouse
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - de_trapasos_detalle_clickhouse
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: de_post_traspasos_mysis
+  retry_config: null
+  status: updated
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - tr_merge_api_traspasos
+  uuid: de_post_traspasos_mysis
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - de_notificacion_termino
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: de_alertas_clickhouse
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - tr_filtro_alertas_nuevas
+  uuid: de_alertas_clickhouse
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: de_notificacion_termino
+  retry_config: null
+  status: updated
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - de_alertas_clickhouse
+  - tr_filtro_alertas_nuevas
+  uuid: de_notificacion_termino
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - dl_mysis_alertas_silencio
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: de_notificacion_inicio
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_exporter
+  upstream_blocks: []
+  uuid: de_notificacion_inicio
+cache_block_output_in_memory: false
+callbacks: []
+concurrency_config: {}
+conditionals: []
+created_at: '2025-11-22 03:16:14.627573+00:00'
+data_integration: null
+description: Movimiento de stock entre sucursales (traspasos) y generar OC
+executor_config: {}
+executor_count: 1
+executor_type: null
+extensions: {}
+name: my_sis_stock
+notification_config: {}
+remote_variables_dir: null
+retry_config: {}
+run_pipeline_in_one_process: false
+settings:
+  triggers: null
+spark_config: {}
+tags:
+- Mysis
+type: python
+uuid: my_sis_stock
+variables_dir: /home/src/mage_data/Maryun
+widgets: []

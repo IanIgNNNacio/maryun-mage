@@ -1,0 +1,1 @@
+SELECT * FROM tab_sku WHERE dt_in >= NOW() - INTERVAL 20 DAY

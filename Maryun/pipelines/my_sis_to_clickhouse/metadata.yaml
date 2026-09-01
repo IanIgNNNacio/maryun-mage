@@ -1,0 +1,90 @@
+blocks:
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    data_provider: mysql
+    data_provider_profile: maryun
+    dbt: {}
+    disable_query_preprocessing: false
+    export_write_policy: append
+    limit: 1000
+    use_raw_sql: true
+  downstream_blocks:
+  - tr_ventas_mysis
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: sql
+  name: dl_ventas_mysis
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_loader
+  upstream_blocks: []
+  uuid: dl_ventas_mysis
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    data_provider: mysql
+    data_provider_profile: maryun
+    export_write_policy: append
+  downstream_blocks:
+  - de_ventas_mysis
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: tr_ventas_mysis
+  retry_config: null
+  status: executed
+  timeout: null
+  type: transformer
+  upstream_blocks:
+  - dl_ventas_mysis
+  uuid: tr_ventas_mysis
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: de_ventas_mysis
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - tr_ventas_mysis
+  uuid: de_ventas_mysis
+cache_block_output_in_memory: false
+callbacks: []
+concurrency_config: {}
+conditionals: []
+created_at: '2025-09-30 02:22:22.452226+00:00'
+data_integration: null
+description: Postgresql MySis a clickhouse superset
+executor_config: {}
+executor_count: 1
+executor_type: null
+extensions: {}
+name: my_sis_to_clickhouse
+notification_config: {}
+remote_variables_dir: null
+retry_config: {}
+run_pipeline_in_one_process: false
+settings:
+  triggers: null
+spark_config: {}
+tags:
+- MYSIS
+- SUPERSET
+type: python
+uuid: my_sis_to_clickhouse
+variables:
+  dias: 5
+  end_date: '2026-01-01'
+  start_date: '2025-10-01'
+variables_dir: /home/src/mage_data/Maryun
+widgets: []

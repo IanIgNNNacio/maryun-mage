@@ -1,0 +1,256 @@
+blocks:
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - dl_mysis_alertas_silencio_v2
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: de_notificacion_inicio_v2
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_exporter
+  upstream_blocks: []
+  uuid: de_notificacion_inicio_v2
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - tr_filtro_alertas_nuevas_v2
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: dl_mysis_alertas_silencio_v2
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_loader
+  upstream_blocks:
+  - de_notificacion_inicio_v2
+  uuid: dl_mysis_alertas_silencio_v2
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - tr_clean_alertas_v2
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: dl_salida_carga_maryun_v2
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_loader
+  upstream_blocks: []
+  uuid: dl_salida_carga_maryun_v2
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - tr_filtro_alertas_nuevas_v2
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: tr_clean_alertas_v2
+  retry_config: null
+  status: executed
+  timeout: null
+  type: transformer
+  upstream_blocks:
+  - dl_salida_carga_maryun_v2
+  uuid: tr_clean_alertas_v2
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - de_alertas_clickhouse_v2
+  - tr_merge_api_traspasos_v2
+  - tr_merge_api_oc_v2
+  - de_notificacion_termino_v2
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: tr_filtro_alertas_nuevas_v2
+  retry_config: null
+  status: executed
+  timeout: null
+  type: transformer
+  upstream_blocks:
+  - dl_mysis_alertas_silencio_v2
+  - tr_clean_alertas_v2
+  uuid: tr_filtro_alertas_nuevas_v2
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - de_post_api_oc_v2
+  - de_api_oc_detalles_clickhouse_v2
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: tr_merge_api_oc_v2
+  retry_config: null
+  status: executed
+  timeout: null
+  type: transformer
+  upstream_blocks:
+  - tr_filtro_alertas_nuevas_v2
+  uuid: tr_merge_api_oc_v2
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - de_api_oc_detalles_clickhouse_v2
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: de_post_api_oc_v2
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - tr_merge_api_oc_v2
+  uuid: de_post_api_oc_v2
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: de_api_oc_detalles_clickhouse_v2
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - tr_merge_api_oc_v2
+  - de_post_api_oc_v2
+  uuid: de_api_oc_detalles_clickhouse_v2
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - de_post_traspasos_mysis_v2
+  - de_trapasos_detalle_clickhouse_v2
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: tr_merge_api_traspasos_v2
+  retry_config: null
+  status: executed
+  timeout: null
+  type: transformer
+  upstream_blocks:
+  - tr_filtro_alertas_nuevas_v2
+  uuid: tr_merge_api_traspasos_v2
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - de_trapasos_detalle_clickhouse_v2
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: de_post_traspasos_mysis_v2
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - tr_merge_api_traspasos_v2
+  uuid: de_post_traspasos_mysis_v2
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: de_trapasos_detalle_clickhouse_v2
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - tr_merge_api_traspasos_v2
+  - de_post_traspasos_mysis_v2
+  uuid: de_trapasos_detalle_clickhouse_v2
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - de_notificacion_termino_v2
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: de_alertas_clickhouse_v2
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - tr_filtro_alertas_nuevas_v2
+  uuid: de_alertas_clickhouse_v2
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: de_notificacion_termino_v2
+  retry_config: null
+  status: executed
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - de_alertas_clickhouse_v2
+  - tr_filtro_alertas_nuevas_v2
+  uuid: de_notificacion_termino_v2
+cache_block_output_in_memory: false
+callbacks: []
+concurrency_config: {}
+conditionals: []
+created_at: null
+data_integration: null
+description: Lee la ultima run de logistica_salida_carga_maryun (resultado final de
+  maryun_abastecimiento_V4) y ejecuta el plan TAL CUAL en mysis (OC + traspasos via
+  API), sin re-validar stock. Para la variante con re-chequeo de stock ver maryun_abastecimiento_mysis_v3.
+executor_config: {}
+executor_count: 1
+executor_type: null
+extensions: {}
+name: maryun_abastecimiento_mysis
+notification_config: {}
+remote_variables_dir: null
+retry_config: {}
+run_pipeline_in_one_process: false
+settings:
+  triggers: null
+spark_config: {}
+tags:
+- Mysis
+- Maryun
+type: python
+uuid: maryun_abastecimiento_mysis
+variables:
+  run_id: ''
+variables_dir: /home/src/mage_data/Maryun
+widgets: []

@@ -1,0 +1,69 @@
+# Maryun Replenishment — tunable business parameters.
+# Non-developers can edit this file. Changes take effect on the next run.
+# Schema is validated by app.config.engine_params.EngineParams.
+
+temporal:
+  history_start: "2024-01-01"      # inclusive; earliest month used for forecast/classification
+  closed_months_only: true          # never use current (open) month
+  tolerance_days_closing: 2         # grace period after month-end before considering it "closed"
+
+forecast:
+  method: holt_winters              # holt_winters | naive | mean
+  horizon_months: 12
+  seasonal_periods: 12
+  min_history_months: 6
+  fallback_to_naive_below_min: true
+
+classification:
+  abc_thresholds: [0.80, 0.95]      # cum-revenue cutoffs for A / B
+  xyz_cv_thresholds: [0.50, 1.00]   # coefficient-of-variation cutoffs for X / Y
+
+homologation:
+  enabled: true
+  analytical_weight_national: 0.30  # weight given to national demand when reinforcing Maryun forecast
+  operational_substitution_enabled: true
+  substitution_trigger_zero_at:     # substitute only if Maryun stock is zero at ALL of these
+    - sucursal
+    - CD SUR
+    - CD SANTIAGO
+
+overrides:
+  require_motivo: true
+  require_responsable: true
+  fail_on_missing_sku: true
+
+replenishment:
+  layers_order:                     # order is semantic; do not shuffle lightly
+    - inmovilizado                  # Layer 1: redistribute immobile stock
+    - sobrestock                    # Layer 2: redistribute overstock (capped)
+    - cd                            # Layer 3: pull from CDs
+    - compra                        # Layer 4: purchase order
+  inmovilizado:
+    dias_sin_venta_min: 90          # >= 90 dias sin venta → inmovilizado (dona todo)
+  overstock:
+    cap_fraction: 0.30              # max 30% del excedente del donante se redistribuye
+    min_donor_excess_units: 1
+    factor_demanda_mes: 1.30        # sobrestock si stock > 130% demanda del mes actual
+    dias_sin_venta_max: 89          # y con venta hace <= 89 dias
+  ranking:                          # weights must sum to 1.0
+    w_distance: 0.50
+    w_cost: 0.35
+    w_origin_impact: 0.15
+  respect_prioridad_cd: true
+  respect_reglas_sku_sucursal: true
+  min_cantidad_unidades: 1.0        # redondea a entero y descarta movimientos < 1 unidad
+
+needs:
+  safety_stock_multiplier: 1.5      # in sigmas (z-score for service level)
+  coverage_months_default: 1.5
+  trigger_below_safety: true
+  # Regla de RECENCIA DE VENTA: un (sku, sucursal) que no registra venta en los
+  # últimos N días NO puede ser "requerido" (necesidad=0, dispara=false): no se
+  # compra ni se traslada de entrada hacia él. "Nunca vendió" cuenta como sin
+  # venta reciente. Es independiente de la demanda esperada del pronóstico.
+  bloquear_sin_venta_reciente: true   # poner false para desactivar la regla
+  requerido_dias_sin_venta_max: 90    # > este umbral (días) → no requerido
+
+silence:
+  enabled: true
+  window_days: 7   # días que se silencia un par (sku, sucursal) tras un envío

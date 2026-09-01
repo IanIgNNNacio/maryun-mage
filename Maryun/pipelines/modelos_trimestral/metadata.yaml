@@ -1,0 +1,58 @@
+blocks:
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - de_publicar_snapshots_trimestral
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: de_calcular_staging_modelos_trimestral
+  retry_config: null
+  status: updated
+  timeout: null
+  type: data_exporter
+  upstream_blocks: []
+  uuid: de_calcular_staging_modelos_trimestral
+- all_upstream_blocks_executed: false
+  color: null
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: de_publicar_snapshots_trimestral
+  retry_config: null
+  status: updated
+  timeout: null
+  type: data_exporter
+  upstream_blocks:
+  - de_calcular_staging_modelos_trimestral
+  uuid: de_publicar_snapshots_trimestral
+cache_block_output_in_memory: false
+callbacks: []
+concurrency_config: {}
+conditionals: []
+created_at: null
+data_integration: null
+description: Publica snapshots trimestrales de forecast/clasificacion desde staging
+  hacia tablas activas.
+executor_config: {}
+executor_count: 1
+executor_type: null
+extensions: {}
+name: modelos_trimestral
+notification_config: {}
+remote_variables_dir: null
+retry_config: {}
+run_pipeline_in_one_process: false
+settings:
+  triggers: null
+spark_config: {}
+tags: []
+type: python
+uuid: modelos_trimestral
+variables_dir: /home/src/mage_data/Maryun
+widgets: []
