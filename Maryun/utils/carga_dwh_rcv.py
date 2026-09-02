@@ -140,20 +140,46 @@ def signo_de(tipo_doc: int) -> int:
     return -1 if tipo_doc in TIPOS_NOTA_CREDITO else 1
 
 
-def partir_impuestos(doc: dict, codigos_mayor_costo: set) -> Tuple[int, int]:
-    """Separa 'otros impuestos' en la parte repartible y la que no lo es.
+SQL_IMPUESTOS = """
+SELECT t."documentId", t.codigo, t.valor::bigint
+FROM "SiiDocumentTax" t
+WHERE (%s IS NULL OR t."documentId" IN (
+        SELECT id FROM "SiiDocument" WHERE periodo = %s))
+"""
+
+
+def leer_impuestos(cur, periodo: str | None) -> Dict[str, List[Tuple[str, int]]]:
+    """Los otros impuestos de cada documento, uno por fila.
+
+    Hay que leerlos de aqui y NO de las columnas escalares
+    `otrosImpuestos` / `codigoOtroImpuesto`. 36 documentos llevan mas de un
+    impuesto, y una columna escalar no puede contener dos codigos: el ERP la
+    deja en blanco. Leyendo la columna, esos documentos parecen no tener
+    politica y su impuesto se cae de la base. En 2025 eran $9.913.567 los que
+    se perdian, casi todos de ENEX: 36 facturas de combustible que llevan el
+    28 y el 35 a la vez.
+
+    `cxp-rules.ts` recibe `otrosImpuestos` como una lista de {codigo, valor},
+    que es exactamente esta tabla. La suma del detalle coincide con la columna
+    escalar en los 222 documentos que la tienen distinta de cero.
+    """
+    cur.execute(SQL_IMPUESTOS, (periodo, periodo))
+    por_doc: Dict[str, List[Tuple[str, int]]] = {}
+    for doc_id, codigo, valor in cur.fetchall():
+        por_doc.setdefault(doc_id, []).append((str(codigo or "").strip(), int(valor or 0)))
+    return por_doc
+
+
+def partir_impuestos(impuestos: List[Tuple[str, int]], codigos_mayor_costo: set) -> Tuple[int, int]:
+    """Separa los impuestos del documento en la parte repartible y la que no.
 
     El ERP devuelve IMPUESTO_SIN_POLITICA y NO contabiliza el documento cuando
-    el codigo no esta en la politica. El DWH hace lo mismo: no suma a la base
-    lo que el ERP se niega a clasificar, y lo deja visible en su columna.
+    algun codigo no esta en la politica. El DWH hace lo mismo: no suma a la
+    base lo que el ERP se niega a clasificar, y lo deja visible en su columna.
     """
-    oi = int(doc["otros_impuestos"] or 0)
-    if oi == 0:
-        return 0, 0
-    codigo = (doc["codigo_otro_impuesto"] or "").strip()
-    if codigo and codigo in codigos_mayor_costo:
-        return oi, 0
-    return 0, oi
+    mayor_costo = sum(v for c, v in impuestos if c and c in codigos_mayor_costo)
+    sin_politica = sum(v for c, v in impuestos if not c or c not in codigos_mayor_costo)
+    return mayor_costo, sin_politica
 
 
 def filas_de_dimension(doc: dict, splits: List[dict], base_bruta: int, signo: int,
@@ -224,10 +250,12 @@ def filas_de_dimension(doc: dict, splits: List[dict], base_bruta: int, signo: in
 
 
 def construir(doc: dict, splits_por_clave: Dict[Tuple[str, str], List[dict]],
+              impuestos_por_doc: Dict[str, List[Tuple[str, int]]],
               codigos_mayor_costo: set):
     """Convierte un documento del ERP en sus filas del DWH."""
     signo = signo_de(doc["tipo_doc"])
-    mayor_costo, sin_politica = partir_impuestos(doc, codigos_mayor_costo)
+    mayor_costo, sin_politica = partir_impuestos(
+        impuestos_por_doc.get(doc["id"], []), codigos_mayor_costo)
     inr = int(doc["iva_no_recuperable"] or 0)
 
     base_bruta = int(doc["neto"]) + int(doc["exento"]) + mayor_costo + inr
@@ -312,10 +340,11 @@ def cargar_periodo(cur, periodo: str | None, dry_run: bool = False) -> dict:
     codigos = leer_codigos_mayor_costo(cur)
     documentos = leer_documentos(cur, periodo)
     splits = leer_splits(cur, periodo)
+    impuestos = leer_impuestos(cur, periodo)
 
     filas_doc, filas_cta, filas_cc, incidencias = [], [], [], []
     for d in documentos:
-        fd, fc, fk, inc = construir(d, splits, codigos)
+        fd, fc, fk, inc = construir(d, splits, impuestos, codigos)
         filas_doc.append(fd)
         filas_cta.extend(fc)
         filas_cc.extend(fk)
