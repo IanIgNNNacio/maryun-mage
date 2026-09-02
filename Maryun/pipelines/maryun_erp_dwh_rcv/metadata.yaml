@@ -1,0 +1,64 @@
+blocks:
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - cargar_dwh_rcv
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: verificar_reparto
+  retry_config: null
+  status: updated
+  timeout: null
+  type: custom
+  upstream_blocks: []
+  uuid: verificar_reparto
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: cargar_dwh_rcv
+  retry_config: null
+  status: updated
+  timeout: null
+  type: custom
+  upstream_blocks:
+  - verificar_reparto
+  uuid: cargar_dwh_rcv
+cache_block_output_in_memory: false
+callbacks: []
+concurrency_config: {}
+conditionals: []
+created_at: '2026-09-02 05:33:33.000000+00:00'
+data_integration: null
+description: 'Carga el DWH de facturas RCV desde el Postgres del ERP al esquema dwh:
+  rcv_documento al grano de documento, y rcv_reparto_cuenta y rcv_reparto_centro_costo
+  al grano documento x dimension. Dos tablas de reparto y no una porque el cruce
+  cuenta x centro no existe en el dato. Antes de cargar comprueba que el reparto
+  de Mage sigue coincidiendo con el del ERP. Recarga completa; la variable periodo
+  la acota a un mes.'
+executor_config: {}
+executor_count: 1
+executor_type: null
+extensions: {}
+name: maryun_erp_dwh_rcv
+notification_config: {}
+remote_variables_dir: null
+retry_config: {}
+run_pipeline_in_one_process: false
+settings:
+  triggers: null
+spark_config: {}
+tags: []
+type: python
+uuid: maryun_erp_dwh_rcv
+variables:
+  periodo: ''
+variables_dir: /home/src/mage_data/Maryun
+widgets: []
